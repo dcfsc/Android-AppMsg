@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.follett.fsc.mobile</groupId>
+    <artifactId>appmsg-parent</artifactId>
+    <name>appmsg (Crouton) for Android - Parent</name>
+    <version>1.0.1</version>
+    <packaging>pom</packaging>
+
+    <parent>
+      <groupId>com.follett.fsc.mobile</groupId>
+      <artifactId>fsc-mobile-android-maven-parent</artifactId>
+      <version>1.2-SNAPSHOT</version>
+    </parent>
+    
+    <!--<modules>-->
+        <!--<module>quest-android-app</module>-->
+        <!--<module>quest-android-test</module>-->
+    <!--</modules>-->
+
+    <properties>
+		<!--<zipaligned-classifier></zipaligned-classifier>-->
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                    <artifactId>android-maven-plugin</artifactId>
+                    <version>3.6.0</version>
+                </plugin>
+                <!--<plugin>-->
+					<!--<groupId>com.jayway.maven.plugins.android.generation2</groupId>-->
+					<!--<artifactId>android-maven-plugin</artifactId>-->
+
+					<!--<configuration>-->
+						<!--&lt;!&ndash;<sdk>&ndash;&gt;-->
+							<!--&lt;!&ndash;<platform>10</platform>&ndash;&gt;-->
+						<!--&lt;!&ndash;</sdk>&ndash;&gt;-->
+						<!--&lt;!&ndash;<emulator>&ndash;&gt;-->
+							<!--&lt;!&ndash;<avd>23</avd>&ndash;&gt;-->
+							<!--&lt;!&ndash;<wait>10000</wait>&ndash;&gt;-->
+							<!--&lt;!&ndash;&lt;!&ndash;<options>-no-skin</options> &ndash;&gt;&ndash;&gt;-->
+						<!--&lt;!&ndash;</emulator>&ndash;&gt;-->
+						<!--<zipalign>-->
+							<!--<verbose>true</verbose>-->
+						<!--</zipalign>-->
+						<!--<undeployBeforeDeploy>true</undeployBeforeDeploy>-->
+					<!--</configuration>-->
+				<!--</plugin>-->
+            </plugins>
+        </pluginManagement>
+    </build>
+
+    <profiles>
+		<!-- the standard profile runs the instrumentation tests -->
+		<profile>
+			<id>standard</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>library</module>
+				<module>sample</module>
+			</modules>
+		</profile>
+
+		<!-- the release profile does sign, zipalign... AND runs instrumentation tests -->
+      <!-- invoke as mvn -P release -Dfsc.build.release -Dsign.alias=mykey -Dsign.keystore=fsc.mobile.keystore -Dsign.storepass=${KEY_STORE_PASSWORD} -Dsign.keypass=${KEY_ALIAS_PASSWORD} install -->
+        <profile>
+            <id>release</id>
+            <!-- via this activation the profile is automatically used when the release is done with the maven release plugin -->
+            <activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+            </activation>
+            <!-- set a property to disable the standard profile -->
+            <properties>
+                <fsc.build.release>xxxx</fsc.build.release>
+                <xxrelease>xxxx</xxrelease>
+            </properties>
+            <!-- dont include the test package in the release version -->
+            <modules>
+                <module>library</module>
+                <module>sample</module>
+            </modules>
+           
+            <build>
+                <plugins>
+                </plugins>
+            </build>
+        </profile>
+        
+    </profiles>
+
+</project>

@@ -12,10 +12,10 @@
     </parent>
 
     <groupId>com.follett.fsc.mobile</groupId>
-    <artifactId>appmsg</artifactId>
+    <artifactId>appmsg-sample</artifactId>
     <version>1.0.1</version>
-    <packaging>apklib</packaging>
-    <name>appmsg (Crouton) for Android - Library</name>
+    <packaging>apk</packaging>
+    <name>appmsg (Crouton) for Android - Sample App</name>
 
     <dependencies>
         <dependency>
@@ -24,13 +24,39 @@
             <version>4.1.1.4</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.follett.fsc.mobile</groupId>
+            <artifactId>appmsg</artifactId>
+            <version>1.0.1</version>
+            <classifier>apklib</classifier>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.follett.fsc.mobile</groupId>
+            <artifactId>appmsg</artifactId>
+            <version>1.0.1</version>
+            <classifier>jar</classifier>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.actionbarsherlock</groupId>
+            <artifactId>actionbarsherlock</artifactId>
+            <version>4.3.1</version>
+            <type>apklib</type>
+            <exclusions>
+                <exclusion>
+                    <!-- numberpicker uses the std google. We don't. Use newest support to allow multiple fragments -->
+                    <groupId>com.google.android</groupId>
+                    <artifactId>support-v4</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
     </dependencies>
 
     <build>
         <sourceDirectory>src</sourceDirectory>
         <plugins>
-
-
 <!--
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -55,7 +81,7 @@
             <plugin>
                 <groupId>com.jayway.maven.plugins.android.generation2</groupId>
                 <artifactId>android-maven-plugin</artifactId>
-                <version>3.6.0</version>
+                <version>3.5.0</version>
                 <configuration>
                     <androidManifestFile>${project.basedir}/AndroidManifest.xml</androidManifestFile>
                     <assetsDirectory>${project.basedir}/assets</assetsDirectory>
